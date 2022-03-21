@@ -1,15 +1,11 @@
 import * as Yup from 'yup';
 import Category from '../models/Category';
-import Product from '../models/Product';
 import User from '../models/User';
 
-class ProductController {
+class CategoryController {
   async store(request, response) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
-      price: Yup.number().required(),
-      category_id: Yup.number().required(),
-      offer: Yup.boolean(),
     });
 
     try {
@@ -25,40 +21,35 @@ class ProductController {
       return response.status(401).json();
     }
 
-    const { filename: path } = request.file;
-    const { name, price, category_id, offer } = request.body;
+    const { name } = request.body;
 
-    const product = await Product.create({
-      name,
-      price,
-      category_id,
-      path,
-      offer,
+    const { filename: path } = request.file;
+
+    const categoryExists = await Category.findOne({
+      where: { name },
     });
 
-    return response.json(product);
+    if (categoryExists) {
+      return response.status(400).json({ error: 'Category already exists' });
+    }
+
+    const { id } = await Category.create({
+      name,
+      path,
+    });
+
+    return response.json({ name, id });
   }
 
   async index(request, response) {
-    const products = await Product.findAll({
-      include: [
-        {
-          model: Category,
-          as: 'category',
-          attributes: ['id', 'name'],
-        },
-      ],
-    });
+    const category = await Category.findAll();
 
-    return response.json(products);
+    return response.json(category);
   }
 
   async update(request, response) {
     const schema = Yup.object().shape({
       name: Yup.string(),
-      price: Yup.number(),
-      category_id: Yup.number(),
-      offer: Yup.boolean(),
     });
 
     try {
@@ -74,14 +65,16 @@ class ProductController {
       return response.status(401).json();
     }
 
+    const { name } = request.body;
+
     const { id } = request.params;
 
-    const product = await Product.findByPk(id);
+    const category = await Category.findByPk(id);
 
-    if (!product) {
+    if (!category) {
       return response
-        .status(401)
-        .json({ error: 'Make sure you product ID is correct' });
+        .status(400)
+        .json({ error: 'Make sure your category id is correct' });
     }
 
     let path;
@@ -89,15 +82,10 @@ class ProductController {
       path = request.file.filename;
     }
 
-    const { name, price, category_id, offer } = request.body;
-
-    await Product.update(
+    await Category.update(
       {
         name,
-        price,
-        category_id,
         path,
-        offer,
       },
       { where: { id } }
     );
@@ -106,4 +94,4 @@ class ProductController {
   }
 }
 
-export default new ProductController();
+export default new CategoryController();
