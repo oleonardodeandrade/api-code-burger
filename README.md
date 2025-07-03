@@ -1,24 +1,35 @@
+# 🍔 CodeBurger API
 
-# API CodeBurger
+CodeBurger is a backend project built for burger shops, developed during the DevClub course to practice real-world skills using modern technologies.
 
-CodeBurger é um projeto para Hamburguerias
+---
 
+## 📐 Design Reference
 
-## Referência
+- [Figma Template](https://www.figma.com/file/bjFYpO0VU0Y8l2bWALFCvt/Burger-shop?node-id=0%3A1)
 
- - [Figma Template](https://www.figma.com/file/bjFYpO0VU0Y8l2bWALFCvt/Burger-shop?node-id=0%3A1)
+---
 
-
-## Autores
+## 👨‍💻 Author
 
 - [@leonardodeandrade](https://www.linkedin.com/in/leonardohandrade/)
 
+---
 
-## Aprendizados
+## 📚 What I Learned
 
-Aprendi muito sobre Docker, Node, JavaScript, PostgreSQL, Sequelize, MongoDB entre outras coisas bem legais.
+Through this project, I gained solid hands-on experience with:
+- Docker and containerization
+- Node.js with Express
+- JavaScript best practices
+- PostgreSQL and Sequelize ORM
+- MongoDB and multi-database architecture
 
-## Stack utilizada
+---
 
-**Back-end:** Node, Express
+## 🛠 Tech Stack
+
+**Backend:** Node.js, Express  
+**Databases:** PostgreSQL (with Sequelize), MongoDB  
+**DevTools:** Docker, ESLint, Prettier, dotenv
 
